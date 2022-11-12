@@ -131,10 +131,9 @@ public class CopyCameraPhotosController : MonoBehaviour
                1);
         var photoTargetBounds = new BoundsInt(targetBoundsPosition, photoBoundsSize);
 
-        /*
-        for (int j = 0; j < boundsSize.y; j++)
+        for (int j = 0; j < photoBoundsSize.y; j++)
         {
-            for (int i = 0; i < boundsSize.x; i++)
+            for (int i = 0; i < photoBoundsSize.x; i++)
             {
                 var tilePos = new Vector3Int(
                     boundsPosition.x + i,
@@ -148,13 +147,12 @@ public class CopyCameraPhotosController : MonoBehaviour
                 }
             }
         }
-        */
 
-        
+        /*
         worldTilemap.SetTilesBlock(
             photoTargetBounds,
             photoTilemap.GetTilesBlock(new BoundsInt(boundsPosition, photoBoundsSize)));
-        
+        */
 
         /*
         var spawnedPhoto = Instantiate(photoTilemap, worldTilemap.layoutGrid.transform);
