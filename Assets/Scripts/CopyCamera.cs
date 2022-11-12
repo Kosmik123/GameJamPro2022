@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class CopyCamera : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+
+
+    [SerializeField]
+    private Vector2Int intPosition;
+
+    private Camera mainCamera;
+
+    private void Start()
     {
-        
+        mainCamera = Camera.main;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        var position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        intPosition = new Vector2Int(
+            Mathf.RoundToInt(position.x),
+            Mathf.RoundToInt(position.y));
+
+        transform.position = new Vector3(intPosition.x, intPosition.y, transform.position.z);
     }
 }
