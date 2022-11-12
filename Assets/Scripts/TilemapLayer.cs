@@ -6,11 +6,11 @@ public class TilemapLayer : MonoBehaviour
 {
     public enum Type
     {
-        Ground, 
-        Hole,
-        NotSpawnable,
-        NotCopiable,
-        Physical
+        Ground = 1, 
+        Hole = 2,
+        NotCopiable = 3,
+        NotSpawnable = 4,
+        Physical = 5
     }
 
     [SerializeField]

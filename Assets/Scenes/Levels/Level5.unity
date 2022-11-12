@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 1409780}
   - component: {fileID: 1409779}
   - component: {fileID: 1409778}
+  - component: {fileID: 1409781}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Level Tiles
@@ -322,6 +323,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1409781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86402bad1a8a9154ca3544da587a31b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 1
 --- !u!1 &156214376
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +348,7 @@ GameObject:
   - component: {fileID: 156214380}
   - component: {fileID: 156214379}
   - component: {fileID: 156214378}
+  - component: {fileID: 156214381}
   m_Layer: 0
   m_Name: Tilemap (1)
   m_TagString: Level Tiles
@@ -1621,6 +1636,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &156214381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156214376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86402bad1a8a9154ca3544da587a31b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
 --- !u!1001 &528101862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1862,6 +1890,7 @@ GameObject:
   - component: {fileID: 2065771193}
   - component: {fileID: 2065771192}
   - component: {fileID: 2065771191}
+  - component: {fileID: 2065771194}
   m_Layer: 0
   m_Name: Tilemap (2)
   m_TagString: Level Tiles
@@ -2189,3 +2218,16 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2065771194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065771189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86402bad1a8a9154ca3544da587a31b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 3
