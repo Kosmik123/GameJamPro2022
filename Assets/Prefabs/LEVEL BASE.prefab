@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: playerDeath
       value: 
       objectReference: {fileID: 7532331638547654736}
+    - target: {fileID: 1195717371289901306, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
+      propertyPath: copyCameraController
+      value: 
+      objectReference: {fileID: 1756888220807489620}
     - target: {fileID: 4664386230210792865, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
       propertyPath: container
       value: 
@@ -933,6 +937,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2726664319279703902, guid: 262728fc2219af4449b3605ae954331d, type: 3}
   m_PrefabInstance: {fileID: 5004481760835107461}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1756888220807489620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6706639548152222417, guid: 262728fc2219af4449b3605ae954331d, type: 3}
+  m_PrefabInstance: {fileID: 5004481760835107461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6adcfb1b2f46a5b49b624d788616c4d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5425658689696479566
 PrefabInstance:
   m_ObjectHideFlags: 0

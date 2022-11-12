@@ -8,7 +8,9 @@ public class LevelController : MonoBehaviour
     private TilemapsController tilemapsController;
     [SerializeField]
     private PlayerDeath playerDeath;
-    
+    [SerializeField]
+    private CopyCameraPhotosController copyCameraController;
+
     private void OnEnable()
     {
         playerDeath.OnDied += RestartLevel;
@@ -18,7 +20,7 @@ public class LevelController : MonoBehaviour
     {
         tilemapsController.RecreateTilemaps();
         playerDeath.Respawn();
-        Debug.Log("Reset Level");
+        copyCameraController.Clear();
     }
 
     private void Update()

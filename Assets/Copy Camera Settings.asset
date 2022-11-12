@@ -15,4 +15,4 @@ MonoBehaviour:
   worldTileSize: {x: 32, y: 18}
   viewTileSize: {x: 6, y: 4}
   actionHoldTime: 0.001
-  terrainSortingLayer: 
+  terrainSortingLayer: Background

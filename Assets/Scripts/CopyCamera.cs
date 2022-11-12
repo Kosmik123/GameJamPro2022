@@ -2,13 +2,6 @@ using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Tilemaps;
 
-public struct Photo
-{
-    public TileBase[] tiles;
-    public bool hasCollider; // not working 
-    public bool hasRididbody; // not working
-}
-
 public class CopyCamera : MonoBehaviour
 {
     [Header("To Link")]
@@ -16,10 +9,17 @@ public class CopyCamera : MonoBehaviour
     private CopyCameraSettings settings;
     public CopyCameraSettings Settings => settings;
 
+    [Header("Visuals")]
     [SerializeField]
-    private SpriteRenderer spriteRenderer;
-    public SpriteRenderer SpriteRenderer => spriteRenderer;
+    private Transform visuals;
+    public Transform Visuals => visuals;
 
+    [SerializeField]
+    private SpriteRenderer photoModeGraphic;
+    public SpriteRenderer PhotoModeGraphic  => photoModeGraphic;
+    [SerializeField]
+    private SpriteRenderer spawnModeGraphic;
+    public SpriteRenderer SpawnModeGraphic  => spawnModeGraphic;
 
     [Header("States")]
     [ReadOnly]
@@ -27,6 +27,20 @@ public class CopyCamera : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer.size = settings.ViewTileSize;
+        RefreshVisualsSizes();
     }
+
+    private void RefreshVisualsSizes()
+    {
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, (Vector2)settings.ViewTileSize);
+    }
+
+
+
 }

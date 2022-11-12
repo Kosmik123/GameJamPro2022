@@ -2,19 +2,27 @@
 using NaughtyAttributes;
 using UnityEngine.Tilemaps;
 
+[SerializeField]
+public class Photo
+{
+    public TileBase[] tiles;
+    public bool hasCollider; // not working 
+    public bool hasRididbody; // not working
+}
+
 public class CopyCameraPhotosController : MonoBehaviour
 {
+    [Header("To Link")]
     [SerializeField]
     private CopyCamera copyCamera;
-
     [Space, SerializeField]
     private Tilemap photoTilemap;
     public Tilemap PhotoTilemap => photoTilemap;
-    
     [SerializeField]
     private TilemapRenderer photoRenderer;
     public TilemapRenderer PhotoRenderer => photoRenderer;
 
+    [Header("States")]
     [SerializeField, ReadOnly]
     private bool isSpawnMode;
     public bool IsSpawnMode
@@ -23,26 +31,39 @@ public class CopyCameraPhotosController : MonoBehaviour
         set
         {
             isSpawnMode = value;
-            copyCamera.SpriteRenderer.color = isSpawnMode ? Color.black : Color.red;
-            PhotoRenderer.enabled = isSpawnMode;
+            RefreshVisuals();
         }
     }
 
-    private void Awake()
+    private void RefreshVisuals()
     {
-        currentlySavedPhoto.tiles = new TileBase[copyCamera.Settings.ViewTileSize.x * copyCamera.Settings.ViewTileSize.y];
+        copyCamera.PhotoModeGraphic.gameObject.SetActive(!isSpawnMode);
+        copyCamera.SpawnModeGraphic.gameObject.SetActive(IsSpawnMode);
+        PhotoRenderer.enabled = isSpawnMode;
     }
 
     private bool isPressed;
     private float holdTime;
 
-    private Photo currentlySavedPhoto;
+    private Photo currentlySavedPhoto = new Photo();
+    private bool isPhotoTaken = false;
+
+    private void Awake()
+    {
+        currentlySavedPhoto.tiles = new TileBase[copyCamera.Settings.ViewTileSize.x * copyCamera.Settings.ViewTileSize.y];
+        Clear();
+    }
+
+    public void Clear()
+    {
+        isPhotoTaken = false;
+        IsSpawnMode = false;
+    }
 
     private void Update()
     {
-
         if (Input.GetMouseButtonDown(1))
-            IsSpawnMode = !isSpawnMode;
+            IsSpawnMode = isPhotoTaken && !isSpawnMode;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -91,6 +112,7 @@ public class CopyCameraPhotosController : MonoBehaviour
         }
         var photoBounds = new BoundsInt(-size.x / 2, -size.y / 2, 0, size.x, size.y, 1);
         photoTilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tiles);
+        isPhotoTaken = true;
         IsSpawnMode = true;
     }
 
