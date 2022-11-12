@@ -136,6 +136,14 @@ PrefabInstance:
       propertyPath: container
       value: 
       objectReference: {fileID: 3354720002727967025}
+    - target: {fileID: 4664386230210792865, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
+      propertyPath: spawnedTilemapContainer
+      value: 
+      objectReference: {fileID: 7245906507714062612}
+    - target: {fileID: 4664386230210792865, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
+      propertyPath: originalTilemapContainer
+      value: 
+      objectReference: {fileID: 761084402685081625}
     - target: {fileID: 8459965349118418440, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
       propertyPath: m_RootOrder
       value: 0
