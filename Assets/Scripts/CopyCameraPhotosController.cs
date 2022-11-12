@@ -10,9 +10,14 @@ public class Photo
     public bool hasRididbody; // not working
 }
 
+
 public class CopyCameraPhotosController : MonoBehaviour
 {
     [Header("To Link")]
+    [SerializeField]
+    private TilemapsController tilemapsController;
+
+    [Header("Elements")]
     [SerializeField]
     private CopyCamera copyCamera;
     [Space, SerializeField]
@@ -80,21 +85,26 @@ public class CopyCameraPhotosController : MonoBehaviour
             holdTime += Time.deltaTime;
             if (holdTime > copyCamera.Settings.ActionHoldTime)
             {
-                var tilemap = GameObject.FindGameObjectWithTag("Level Tiles").GetComponentInChildren<Tilemap>();
                 if (isSpawnMode)
-                    SpawnPhoto(tilemap);
+                    SpawnPhoto();
                 else
-                    MakePhoto(tilemap);
+                    MakePhoto();
                 holdTime = 0;
                 isPressed = false;
             }
         }
     }
 
-    private void MakePhoto(Tilemap worldTilemap)
+
+    private void MakePhoto()
     {
-        int xEnd = worldTilemap.origin.x + worldTilemap.size.x;
-        int yEnd = worldTilemap.origin.y + worldTilemap.size.y;
+        foreach (var tilemap in tilemapsController.Tile)
+    }
+
+    private void MakePhoto(Tilemap tilemap)
+    {
+        int xEnd = tilemap.origin.x + tilemap.size.x;
+        int yEnd = tilemap.origin.y + tilemap.size.y;
 
         Vector2Int size = copyCamera.Settings.ViewTileSize;
         Vector2Int startVisiblePos = copyCamera.intPosition - copyCamera.Settings.ViewTileSize / 2;
@@ -105,7 +115,7 @@ public class CopyCameraPhotosController : MonoBehaviour
         {
             for (int i = startVisiblePos.x; i < endVisiblePos.x; i++)
             {
-                var tile = worldTilemap.GetTile(new Vector3Int(i, j, 0));
+                var tile = tilemap.GetTile(new Vector3Int(i, j, 0));
                 currentlySavedPhoto.tiles[index] = tile;
                 index++;
             }
@@ -116,7 +126,7 @@ public class CopyCameraPhotosController : MonoBehaviour
         IsSpawnMode = true;
     }
 
-    private void SpawnPhoto(Tilemap worldTilemap)
+    private void SpawnPhoto(Tilemap tilemap)
     {
         #region dziwne
         /*
@@ -165,7 +175,7 @@ public class CopyCameraPhotosController : MonoBehaviour
                 if (tile != null)
                 {
                     var targetPos = tilePos + (Vector3Int)copyCamera.intPosition;
-                    worldTilemap.SetTile(targetPos, tile);
+                    tilemap.SetTile(targetPos, tile);
                 }
             }
         }

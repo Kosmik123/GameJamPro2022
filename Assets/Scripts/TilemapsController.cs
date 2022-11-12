@@ -10,17 +10,8 @@ public class TilemapsController : MonoBehaviour
     [SerializeField]
     private Grid spawnedTilemapContainer;
 
-    [ContextMenu("Clear")]
-    public void Clear()
-    {
-        var allPhotoTilemaps = spawnedTilemapContainer.GetComponentsInChildren<Tilemap>();
-        foreach(var tilemap in allPhotoTilemaps)
-        {
-            if (tilemap.gameObject != null)
-                Destroy(tilemap.gameObject);
-        }
-        originalTilemapContainer.gameObject.SetActive(false);
-    }
+    private readonly Dictionary<TilemapLayer.Type, TilemapLayer> tilemapsByType = new Dictionary<TilemapLayer.Type, TilemapLayer>();
+    public IReadOnlyDictionary<TilemapLayer.Type, TilemapLayer> Tilemaps => tilemapsByType;
 
     private void Start()
     {
@@ -33,13 +24,27 @@ public class TilemapsController : MonoBehaviour
         CreateCopyTilemaps();
     }
 
+    [ContextMenu("Clear")]
+    public void Clear()
+    {
+        var allPhotoTilemaps = spawnedTilemapContainer.GetComponentsInChildren<TilemapLayer>();
+        foreach (var tilemapLayer in allPhotoTilemaps)
+        {
+            if (tilemapLayer.gameObject != null)
+                Destroy(tilemapLayer.gameObject);
+        }
+        originalTilemapContainer.gameObject.SetActive(false);
+    }
+
     private void CreateCopyTilemaps()
     {
         spawnedTilemapContainer.gameObject.SetActive(true);
-        var allLevelTilemaps = originalTilemapContainer.GetComponentsInChildren<Tilemap>();
+        var allLevelTilemaps = originalTilemapContainer.GetComponentsInChildren<TilemapLayer>();
+        tilemapsByType.Clear();
         foreach (var tilemap in allLevelTilemaps)
         {
             var spawned = Instantiate(tilemap, spawnedTilemapContainer.transform);
+            tilemapsByType.Add(spawned.type, spawned);
             spawned.gameObject.SetActive(true);
         }
     }
