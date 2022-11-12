@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldTileSize: {x: 32, y: 18}
   viewTileSize: {x: 6, y: 4}
+  actionHoldTime: 0.5

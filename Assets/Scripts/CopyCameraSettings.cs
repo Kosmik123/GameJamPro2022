@@ -10,4 +10,9 @@ public class CopyCameraSettings : ScriptableObject
     [SerializeField]
     private Vector2Int viewTileSize;
     public Vector2Int ViewTileSize => viewTileSize;
+
+    [SerializeField]
+    private float actionHoldTime;
+    public float ActionHoldTime => actionHoldTime;
+
 }
