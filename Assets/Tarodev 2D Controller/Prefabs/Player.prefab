@@ -19771,6 +19771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 6432609860406773170}
+  playerController: {fileID: 6432609860406773168}
   visuals: {fileID: 5124300410236407460}
   yDeath: -10
   trailRenderer: {fileID: 5580271793712724118}

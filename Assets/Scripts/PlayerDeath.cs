@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TarodevController;
 using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerDeath : MonoBehaviour
     
     [SerializeField]
     private Transform playerTransform;
+    [SerializeField]
+    private PlayerController playerController;
     [SerializeField]
     private GameObject visuals;
     [SerializeField]
@@ -38,6 +41,8 @@ public class PlayerDeath : MonoBehaviour
     public void Respawn()
     {
         playerTransform.position = startingPosition;
+        playerController.Velocity = Vector3.zero;
+
         isDead = false;
         StartCoroutine(EnableTrailCo());
     }

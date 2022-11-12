@@ -12,7 +12,7 @@ namespace TarodevController {
     /// </summary>
     public class PlayerController : MonoBehaviour, IPlayerController {
         // Public for external hooks
-        public Vector3 Velocity { get; private set; }
+        public Vector3 Velocity { get; set; }
         public FrameInput Input { get; private set; }
         public bool JumpingThisFrame { get; private set; }
         public bool LandingThisFrame { get; private set; }
