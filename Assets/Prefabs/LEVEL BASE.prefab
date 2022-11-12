@@ -351,6 +351,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8459965349118418440, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
   m_PrefabInstance: {fileID: 2546624596886875603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7200225579810349170 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4664386230210792865, guid: ef0df8b72dde99c44b87c21f05cfa6c3, type: 3}
+  m_PrefabInstance: {fileID: 2546624596886875603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59654b362052a046bd5821e9b35e26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5004481760835107461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -930,6 +941,10 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[23].second.m_TileObjectToInstantiateIndex
       value: 65535
       objectReference: {fileID: 0}
+    - target: {fileID: 6706639548152222417, guid: 262728fc2219af4449b3605ae954331d, type: 3}
+      propertyPath: tilemapsManager
+      value: 
+      objectReference: {fileID: 7200225579810349170}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 262728fc2219af4449b3605ae954331d, type: 3}
 --- !u!4 &6963817805663264219 stripped

@@ -1,6 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+using System;
 
 public class CopyCamera : MonoBehaviour
 {
@@ -21,13 +23,38 @@ public class CopyCamera : MonoBehaviour
     private SpriteRenderer spawnModeGraphic;
     public SpriteRenderer SpawnModeGraphic  => spawnModeGraphic;
 
+
+    [SerializeField]
+    private Grid tilemapContainer;
+    public Grid TilemapsContainer => tilemapContainer;
+
     [Header("States")]
     [ReadOnly]
     public Vector2Int intPosition;
 
+    public readonly Dictionary<TilemapLayer.Type, TilemapLayer> tilemapLayers = new Dictionary<TilemapLayer.Type, TilemapLayer>(4);
+
+    private void Awake()
+    {
+        var tilemapLayerComponents = tilemapContainer.GetComponentsInChildren<TilemapLayer>();
+        foreach (var tilemapLayer in tilemapLayerComponents)
+        {
+            tilemapLayers[tilemapLayer.type] = tilemapLayer;
+        }
+    }
+
     private void Start()
     {
+        foreach (var tilemapLayer in tilemapLayers)
+        {
+
+        }
         RefreshVisualsSizes();
+    }
+
+    private int TilemapRenderer(out object var)
+    {
+        throw new NotImplementedException();
     }
 
     private void RefreshVisualsSizes()

@@ -1,13 +1,36 @@
 ﻿using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+using UnityEditor;
+using System;
 
 [SerializeField]
 public class Photo
 {
-    public TileBase[] tiles;
+    public readonly Dictionary<TilemapLayer.Type, TileBase[]> tilesByType = new Dictionary<TilemapLayer.Type, TileBase[]>();
     public bool hasCollider; // not working 
     public bool hasRididbody; // not working
+
+    public int width, height;
+
+    public Photo(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+    }
+
+    internal void SetTiles(TilemapLayer.Type type, TileBase[] tiles)
+    {
+        int len = tiles.Length;
+        if (tilesByType.ContainsKey(type) == false || tilesByType[type] == null)
+            tilesByType[type] = new TileBase[len];
+
+        for (int i = 0; i < len; i++)
+        {
+            tilesByType[type][i] = tiles[i];
+        }
+    }
 }
 
 
@@ -20,12 +43,6 @@ public class CopyCameraPhotosController : MonoBehaviour
     [Header("Elements")]
     [SerializeField]
     private CopyCamera copyCamera;
-    [Space, SerializeField]
-    private Tilemap photoTilemap;
-    public Tilemap PhotoTilemap => photoTilemap;
-    [SerializeField]
-    private TilemapRenderer photoRenderer;
-    public TilemapRenderer PhotoRenderer => photoRenderer;
 
     [Header("States")]
     [SerializeField, ReadOnly]
@@ -40,22 +57,25 @@ public class CopyCameraPhotosController : MonoBehaviour
         }
     }
 
+    private TileBase[] cachedTiles;
+
     private void RefreshVisuals()
     {
         copyCamera.PhotoModeGraphic.gameObject.SetActive(!isSpawnMode);
         copyCamera.SpawnModeGraphic.gameObject.SetActive(IsSpawnMode);
-        PhotoRenderer.enabled = isSpawnMode;
+        copyCamera.TilemapsContainer.gameObject.SetActive(isSpawnMode);
     }
 
     private bool isPressed;
     private float holdTime;
 
-    private Photo currentlySavedPhoto = new Photo();
     private bool isPhotoTaken = false;
+    private Photo currentlySavedPhoto;
 
     private void Awake()
     {
-        currentlySavedPhoto.tiles = new TileBase[copyCamera.Settings.ViewTileSize.x * copyCamera.Settings.ViewTileSize.y];
+        currentlySavedPhoto = new Photo(copyCamera.Settings.ViewTileSize.x, copyCamera.Settings.ViewTileSize.y);
+        cachedTiles = new TileBase[copyCamera.Settings.ViewTileSize.x * copyCamera.Settings.ViewTileSize.y];
         Clear();
     }
 
@@ -98,19 +118,20 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void MakePhoto()
     {
-        foreach (var tilemap in tilemapsManager.Tilemaps)
+        Vector2Int size = copyCamera.Settings.ViewTileSize;
+        Vector2Int startVisiblePos = copyCamera.intPosition - copyCamera.Settings.ViewTileSize / 2;
+
+        foreach (var tilemap in tilemapsManager.TilemapLayers)
         {
-            MakePhoto(tilemap.Value);
+            if (tilemap.Key != TilemapLayer.Type.NotCopiable)
+                MakePhoto(tilemap.Value, startVisiblePos, size);
         }
     }
 
-    private void MakePhoto(Tilemap tilemap)
+    private void MakePhoto(TilemapLayer tilemapLayer, Vector2Int startVisiblePos, Vector2Int size)
     {
-        int xEnd = tilemap.origin.x + tilemap.size.x;
-        int yEnd = tilemap.origin.y + tilemap.size.y;
-
-        Vector2Int size = copyCamera.Settings.ViewTileSize;
-        Vector2Int startVisiblePos = copyCamera.intPosition - copyCamera.Settings.ViewTileSize / 2;
+        var type = tilemapLayer.type;
+        var tilemap = tilemapLayer.Tilemap;
         Vector2Int endVisiblePos = startVisiblePos + size;
 
         int index = 0;
@@ -119,12 +140,15 @@ public class CopyCameraPhotosController : MonoBehaviour
             for (int i = startVisiblePos.x; i < endVisiblePos.x; i++)
             {
                 var tile = tilemap.GetTile(new Vector3Int(i, j, 0));
-                currentlySavedPhoto.tiles[index] = tile;
+                cachedTiles[index] = tile;
                 index++;
             }
         }
+
+        currentlySavedPhoto.SetTiles(type, cachedTiles);
+
         var photoBounds = new BoundsInt(-size.x / 2, -size.y / 2, 0, size.x, size.y, 1);
-        photoTilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tiles);
+        copyCamera.tilemapLayers[type].Tilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tilesByType[type]);
         isPhotoTaken = true;
         IsSpawnMode = true;
     }
@@ -134,7 +158,7 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     }
 
-    private void SpawnPhoto(Tilemap tilemap)
+    private void SpawnPhoto(TilemapLayer tilemapLayer)
     {
         #region dziwne
         /*
@@ -158,7 +182,7 @@ public class CopyCameraPhotosController : MonoBehaviour
             photoTilemap.GetTilesBlock(photoTilemap.cellBounds));
                         */
         #endregion
-
+        var tilemap = tilemapLayer.Tilemap;
         var boundsPosition = new Vector3Int(
            -copyCamera.Settings.ViewTileSize.x / 2,
            -copyCamera.Settings.ViewTileSize.y / 2,
@@ -179,12 +203,14 @@ public class CopyCameraPhotosController : MonoBehaviour
                     boundsPosition.x + i,
                     boundsPosition.y + j,
                     0);
+                /*
                 var tile = photoTilemap.GetTile(tilePos);
                 if (tile != null)
                 {
                     var targetPos = tilePos + (Vector3Int)copyCamera.intPosition;
                     tilemap.SetTile(targetPos, tile);
                 }
+                */
             }
         }
 
