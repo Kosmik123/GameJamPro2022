@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Tilemap))]
+[RequireComponent(typeof(Tilemap)), RequireComponent(typeof(TilemapRenderer))]
 public class TilemapLayer : MonoBehaviour
 {
     public enum Type
@@ -20,10 +20,15 @@ public class TilemapLayer : MonoBehaviour
     private Tilemap tilemap;
     public Tilemap Tilemap => tilemap;
 
+    private TilemapRenderer tilemapRenderer;
+
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
+        tilemapRenderer = GetComponent<TilemapRenderer>();
     }
 
-
+    private void Start()
+    {
+    }
 }
