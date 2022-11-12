@@ -76,53 +76,83 @@ public class CopyCameraPhotosController : MonoBehaviour
             holdTime += Time.deltaTime;
             if (holdTime > copyCamera.Settings.ActionHoldTime)
             {
+                holdTime = 0;
+                isPressed = false;
                 if (isSpawnMode)
                     SpawnPhoto();
                 else
                     MakePhoto();
-                holdTime = 0;
-                isPressed = false;
             }
         }
     }
 
-
     private void MakePhoto()
     {
+        var tilemapLayers = tilemapsManager.TilemapLayers;
         Vector2Int size = copyCamera.Settings.ViewTileSize;
         Vector2Int startVisiblePos = copyCamera.intPosition - copyCamera.Settings.ViewTileSize / 2;
-
-        foreach (var tilemap in tilemapsManager.TilemapLayers)
-        {
-            if (tilemap.Key != TilemapLayer.Type.NotCopiable)
-                MakePhoto(tilemap.Value, startVisiblePos, size);
-        }
-    }
-
-    private void MakePhoto(TilemapLayer tilemapLayer, Vector2Int startVisiblePos, Vector2Int size)
-    {
-        var type = tilemapLayer.type;
-        var tilemap = tilemapLayer.Tilemap;
         Vector2Int endVisiblePos = startVisiblePos + size;
 
         int index = 0;
-        for (int j = startVisiblePos.y; j < endVisiblePos.y; j++)
+        for (int j = 0; j < size.y; j++)
         {
-            for (int i = startVisiblePos.x; i < endVisiblePos.x; i++)
+            for (int i = 0; i < size.x; i++)
             {
-                var tile = tilemap.GetTile(new Vector3Int(i, j, 0));
-                cachedTiles[index] = tile;
+                foreach (var typeToLayerMapping in tilemapLayers)
+                {
+                    var tilemap = typeToLayerMapping.Value.Tilemap;
+                    var pos = new Vector3Int(i + startVisiblePos.x, j + startVisiblePos.y, 0);
+                    var tile = tilemap.GetTile(pos);
+                    if (tile != null)
+                    {
+                        currentlySavedPhoto.SetTile(typeToLayerMapping.Key, new Vector2Int(i, j), tile);
+                        break;
+                    }
+                }
                 index++;
             }
         }
 
-        currentlySavedPhoto.SetTiles(type, cachedTiles);
-
         var photoBounds = new BoundsInt(-size.x / 2, -size.y / 2, 0, size.x, size.y, 1);
-        copyCamera.tilemapLayers[type].Tilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tilesByType[type]);
+        foreach (var typeToLayerMapping in tilemapLayers)
+        {
+            var type = typeToLayerMapping.Key;
+            if (type != TilemapLayer.Type.NotCopiable)
+                copyCamera.tilemapLayers[type].Tilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tilesByType[type]);
+        }
+
         isPhotoTaken = true;
         IsSpawnMode = true;
+
+        //foreach (var tilemap in tilemapsManager.TilemapLayers)
+        //{
+        //    if (tilemap.Key != TilemapLayer.Type.NotCopiable)
+        //        MakePhoto(tilemap.Value, startVisiblePos, size);
+        //}
     }
+
+    //private void MakePhoto(TilemapLayer tilemapLayer, Vector2Int startVisiblePos, Vector2Int size)
+    //{
+    //    var type = tilemapLayer.type;
+    //    var tilemap = tilemapLayer.Tilemap;
+
+    //    int index = 0;
+    //    for (int j = startVisiblePos.y; j < endVisiblePos.y; j++)
+    //    {
+    //        for (int i = startVisiblePos.x; i < endVisiblePos.x; i++)
+    //        {
+    //            var tile = tilemap.GetTile(new Vector3Int(i, j, 0));
+    //            cachedTiles[index] = tile;
+    //            index++;
+    //        }
+    //    }
+
+    //    currentlySavedPhoto.SetTiles(type, cachedTiles);
+
+    //    var photoBounds = new BoundsInt(-size.x / 2, -size.y / 2, 0, size.x, size.y, 1);
+    //    copyCamera.tilemapLayers[type].Tilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tilesByType[type]);
+
+    //}
 
     private void SpawnPhoto()
     {
@@ -141,7 +171,6 @@ public class CopyCameraPhotosController : MonoBehaviour
         foreach (var tilesArray in currentlySavedPhoto.tilesByType)
         {
             var type = tilesArray.Key;
-
             SpawnPhoto(tilesArray.Value, tilemapsManager.TilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
         }
     }

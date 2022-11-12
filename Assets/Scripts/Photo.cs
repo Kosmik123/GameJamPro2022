@@ -28,4 +28,13 @@ public class Photo
             tilesByType[type][i] = tiles[i];
         }
     }
+
+    public void SetTile (TilemapLayer.Type type, Vector2Int position, TileBase tile)
+    {
+        if (tilesByType.ContainsKey(type) == false || tilesByType[type] == null)
+            tilesByType[type] = new TileBase[width * height];
+
+        tilesByType[type][position.y * width + position.x] = tile;
+    }
+
 }
