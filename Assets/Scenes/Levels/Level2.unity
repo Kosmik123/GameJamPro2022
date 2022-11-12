@@ -1509,7 +1509,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -8, y: -5, z: 0}
+  - first: {x: -2, y: -5, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 5
@@ -1519,7 +1519,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 9, y: -5, z: 0}
+  - first: {x: -2, y: -4, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 5
@@ -1529,7 +1529,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -8, y: -4, z: 0}
+  - first: {x: -2, y: -3, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 5
@@ -1539,27 +1539,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 9, y: -4, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 5
-      m_TileSpriteIndex: 5
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 9, y: -3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 5
-      m_TileSpriteIndex: 5
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 9, y: -2, z: 0}
+  - first: {x: -2, y: -2, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 5
@@ -1581,7 +1561,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 128
     m_Data: {fileID: 11400000, guid: 095cf6adefc62b84d9867b7498f3d24f, type: 2}
-  - m_RefCount: 6
+  - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 5ca34176e543261429528a2a96677f1e, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -1594,10 +1574,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 128
     m_Data: {fileID: -4012184258389409411, guid: 4dffc33a42b75c747a29378d1c16340e, type: 3}
-  - m_RefCount: 6
+  - m_RefCount: 4
     m_Data: {fileID: 6474382148146746814, guid: 4dffc33a42b75c747a29378d1c16340e, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 134
+  - m_RefCount: 132
     m_Data:
       e00: 1
       e01: 0
@@ -1616,7 +1596,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 134
+  - m_RefCount: 132
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1649,17 +1629,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4835004941236272089, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
+    - target: {fileID: 296436769315718309, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4255553790325240008, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657835737331218933, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1759553299}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_RootOrder
@@ -1683,11 +1671,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6725581484652605959, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1743,16 +1731,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049003859167288257, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_text
-      value: 'Take a photo of the environment with LMB
+      value: 'Move camera with mouse
 
 
-        Change camera mode
-        with RBM
+        Use LBM to take a picture
 
 
-        Place the photo on the level with LMB
+        Switch
+        camera mode with RBM
 
-'
+
+        Use LBM to place a photo'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049003859167288257, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049003859167288257, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
