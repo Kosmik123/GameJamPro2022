@@ -54,8 +54,7 @@ AnimatorState:
   m_Name: Effect_Ray_Pulse
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -404541355633955613}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -82,7 +81,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 5532217167998694922}
-    m_Position: {x: 258, y: 237, z: 0}
+    m_Position: {x: 260, y: 240, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
