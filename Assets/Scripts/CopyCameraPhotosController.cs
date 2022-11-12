@@ -15,7 +15,7 @@ public class CopyCameraPhotosController : MonoBehaviour
 {
     [Header("To Link")]
     [SerializeField]
-    private TilemapsController tilemapsController;
+    private TilemapsManager tilemapsController;
 
     [Header("Elements")]
     [SerializeField]

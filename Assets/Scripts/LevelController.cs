@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class LevelController : MonoBehaviour
 {
     [SerializeField]
-    private TilemapsController tilemapsController;
+    private TilemapsManager tilemapsController;
     [SerializeField]
     private PlayerDeath playerDeath;
     [SerializeField]
