@@ -1,37 +1,8 @@
 ﻿using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
 using UnityEditor;
 using System;
-
-[SerializeField]
-public class Photo
-{
-    public readonly Dictionary<TilemapLayer.Type, TileBase[]> tilesByType = new Dictionary<TilemapLayer.Type, TileBase[]>();
-    public bool hasCollider; // not working 
-    public bool hasRididbody; // not working
-
-    public int width, height;
-
-    public Photo(int width, int height)
-    {
-        this.width = width;
-        this.height = height;
-    }
-
-    internal void SetTiles(TilemapLayer.Type type, TileBase[] tiles)
-    {
-        int len = tiles.Length;
-        if (tilesByType.ContainsKey(type) == false || tilesByType[type] == null)
-            tilesByType[type] = new TileBase[len];
-
-        for (int i = 0; i < len; i++)
-        {
-            tilesByType[type][i] = tiles[i];
-        }
-    }
-}
 
 
 public class CopyCameraPhotosController : MonoBehaviour
@@ -155,34 +126,6 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void SpawnPhoto()
     {
-
-    }
-
-    private void SpawnPhoto(TilemapLayer tilemapLayer)
-    {
-        #region dziwne
-        /*
-        var boundsOrigin = new Vector3Int(worldTilemap.origin.x, worldTilemap.origin.y, worldTilemap.size.z - 1);
-        var boundsSize = new Vector3Int(worldTilemap.size.x, worldTilemap.size.y, 1);
-        var bounds = new BoundsInt(boundsOrigin, boundsSize);
-        var tiles = worldTilemap.GetTilesBlock(bounds);
-        worldTilemap.InsertCells(worldTilemap.origin, worldTilemap.size.y, worldTilemap.size.x, 1);
-        worldTilemap.SetTilesBlock(bounds, tiles);
-
-        var photoTargetBounds = new BoundsInt(new Vector3Int(
-            photoTilemap.cellBounds.x + copyCamera.intPosition.x, 
-            photoTilemap.cellBounds.y + copyCamera.intPosition.y,
-            worldTilemap.size.z - 1), new Vector3Int(
-                photoTilemap.size.x,
-                photoTilemap.size.y,
-                1));
-
-        worldTilemap.SetTilesBlock(
-            photoTargetBounds,
-            photoTilemap.GetTilesBlock(photoTilemap.cellBounds));
-                        */
-        #endregion
-        var tilemap = tilemapLayer.Tilemap;
         var boundsPosition = new Vector3Int(
            -copyCamera.Settings.ViewTileSize.x / 2,
            -copyCamera.Settings.ViewTileSize.y / 2,
@@ -193,8 +136,21 @@ public class CopyCameraPhotosController : MonoBehaviour
                copyCamera.Settings.ViewTileSize.x,
                copyCamera.Settings.ViewTileSize.y,
                1);
-        var photoTargetBounds = new BoundsInt(targetBoundsPosition, photoBoundsSize);
 
+        var photoTargetBounds = new BoundsInt(targetBoundsPosition, photoBoundsSize);
+        foreach (var tilesArray in currentlySavedPhoto.tilesByType)
+        {
+            var type = tilesArray.Key;
+
+            SpawnPhoto(tilesArray.Value, tilemapsManager.TilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
+        }
+    }
+
+    private void SpawnPhoto(TileBase[] tiles, Tilemap targetTilemap, Vector3Int boundsPosition, Vector3Int photoBoundsSize, Vector3Int targetBoundsPosition, BoundsInt photoTargetBounds)
+    {
+
+        //targetTilemap.SetTilesBlock(photoTargetBounds, tiles);  // to kopiuje też null tile, więc nie
+        int index = 0;
         for (int j = 0; j < photoBoundsSize.y; j++)
         {
             for (int i = 0; i < photoBoundsSize.x; i++)
@@ -203,30 +159,16 @@ public class CopyCameraPhotosController : MonoBehaviour
                     boundsPosition.x + i,
                     boundsPosition.y + j,
                     0);
-                /*
-                var tile = photoTilemap.GetTile(tilePos);
+
+                var tile = tiles[index];
                 if (tile != null)
                 {
                     var targetPos = tilePos + (Vector3Int)copyCamera.intPosition;
-                    tilemap.SetTile(targetPos, tile);
+                    targetTilemap.SetTile(targetPos, tile);
                 }
-                */
+                index++;
             }
         }
 
-        /*
-        worldTilemap.SetTilesBlock(
-            photoTargetBounds,
-            photoTilemap.GetTilesBlock(new BoundsInt(boundsPosition, photoBoundsSize)));
-        */
-
-        /*
-        var spawnedPhoto = Instantiate(photoTilemap, worldTilemap.layoutGrid.transform);
-        spawnedPhoto.transform.position = photoTilemap.transform.position;
-        spawnedPhoto.gameObject.AddComponent<TilemapCollider2D>();
-        var renderer = spawnedPhoto.GetComponent<TilemapRenderer>();
-        renderer.sortingLayerID = copyCamera.Settings.TerrainSortingLayerID;
-        renderer.material = copyCamera.SpriteRenderer.material;
-        */
     }
 }
