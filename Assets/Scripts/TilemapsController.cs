@@ -27,7 +27,7 @@ public class TilemapsController : MonoBehaviour
         RecreateTilemaps();
     }
 
-    private void RecreateTilemaps()
+    public void RecreateTilemaps()
     {
         Clear();
         CreateCopyTilemaps();
@@ -43,10 +43,4 @@ public class TilemapsController : MonoBehaviour
             spawned.gameObject.SetActive(true);
         }
     }
-
-
-
-
-
-
 }

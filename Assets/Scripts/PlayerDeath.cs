@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    [SerializeField]
-    private LevelController levelController;
+    public event Action OnDied;
+    
     [SerializeField]
     private Transform playerTransform;
 
@@ -13,18 +14,27 @@ public class PlayerDeath : MonoBehaviour
     private float yDeath;
 
     private Vector3 startingPosition;
+    private bool isDead;
 
     private void Start()
     {
         startingPosition = playerTransform.position;
+        isDead = false;
     }
 
     private void Update()
     {
-        if (playerTransform.position.y < yDeath)
+        if (isDead == false && playerTransform.position.y < yDeath)
         {
-            playerTransform.position = startingPosition;
-            levelController.ResetLevel();
+            isDead = true;
+            OnDied?.Invoke();
         }
     }
+
+    public void Respawn()
+    {
+        playerTransform.position = startingPosition;
+        isDead = false;
+    }
+
 }
