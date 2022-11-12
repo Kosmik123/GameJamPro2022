@@ -19742,9 +19742,9 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  _detectorCount: 3
-  _detectionRayLength: 0.1
-  _rayBuffer: 0.1
+  _detectorCount: 5
+  _detectionRayLength: 0.15
+  _rayBuffer: 0.04
   _acceleration: 90
   _moveClamp: 13
   _deAcceleration: 60
@@ -19771,7 +19771,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 6432609860406773170}
+  visuals: {fileID: 5124300410236407460}
   yDeath: -10
+  trailRenderer: {fileID: 5580271793712724118}
 --- !u!1 &6432609861764478824
 GameObject:
   m_ObjectHideFlags: 0
