@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8459965349118418440}
   - component: {fileID: 1195717371289901306}
   - component: {fileID: 4664386230210792865}
+  - component: {fileID: 5857628502750259650}
   m_Layer: 0
   m_Name: Level Controller
   m_TagString: Untagged
@@ -56,3 +57,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59654b362052a046bd5821e9b35e26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalTilemapContainer: {fileID: 0}
+  spawnedTilemapContainer: {fileID: 0}
+--- !u!114 &5857628502750259650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649639317011806380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6259a828275ca8044b7f6527dc317dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelController: {fileID: 1195717371289901306}
+  playerTransform: {fileID: 0}
+  yDeath: -10

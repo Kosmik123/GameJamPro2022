@@ -6,6 +6,7 @@ public class LevelController : MonoBehaviour
 {
     public void ResetLevel()
     {
+        Debug.Log("Reset Level");
 
     }
 
