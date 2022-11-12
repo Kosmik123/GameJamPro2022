@@ -15,7 +15,7 @@ public class CopyCameraPhotosController : MonoBehaviour
 {
     [Header("To Link")]
     [SerializeField]
-    private TilemapsManager tilemapsController;
+    private TilemapsManager tilemapsManager;
 
     [Header("Elements")]
     [SerializeField]
@@ -98,7 +98,10 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void MakePhoto()
     {
-        foreach (var tilemap in tilemapsController.Tile)
+        foreach (var tilemap in tilemapsManager.Tilemaps)
+        {
+            MakePhoto(tilemap.Value);
+        }
     }
 
     private void MakePhoto(Tilemap tilemap)
@@ -124,6 +127,11 @@ public class CopyCameraPhotosController : MonoBehaviour
         photoTilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tiles);
         isPhotoTaken = true;
         IsSpawnMode = true;
+    }
+
+    private void SpawnPhoto()
+    {
+
     }
 
     private void SpawnPhoto(Tilemap tilemap)

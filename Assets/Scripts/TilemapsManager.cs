@@ -10,8 +10,8 @@ public class TilemapsManager : MonoBehaviour
     [SerializeField]
     private Grid spawnedTilemapContainer;
 
-    private readonly Dictionary<TilemapLayer.Type, TilemapLayer> tilemapsByType = new Dictionary<TilemapLayer.Type, TilemapLayer>();
-    public IReadOnlyDictionary<TilemapLayer.Type, TilemapLayer> Tilemaps => tilemapsByType;
+    private readonly Dictionary<TilemapLayer.Type, Tilemap> tilemapsByType = new Dictionary<TilemapLayer.Type, Tilemap>();
+    public IReadOnlyDictionary<TilemapLayer.Type, Tilemap> Tilemaps => tilemapsByType;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class TilemapsManager : MonoBehaviour
         foreach (var tilemap in allLevelTilemaps)
         {
             var spawned = Instantiate(tilemap, spawnedTilemapContainer.transform);
-            tilemapsByType.Add(spawned.type, spawned);
+            tilemapsByType.Add(spawned.type, spawned.Tilemap);
             spawned.gameObject.SetActive(true);
         }
     }
