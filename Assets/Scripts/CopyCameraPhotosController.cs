@@ -59,7 +59,7 @@ public class CopyCameraPhotosController : MonoBehaviour
             holdTime += Time.deltaTime;
             if (holdTime > copyCamera.Settings.ActionHoldTime)
             {
-                var tilemap = GameObject.FindGameObjectWithTag("Level Tiles").GetComponent<Tilemap>();
+                var tilemap = GameObject.FindGameObjectWithTag("Level Tiles").GetComponentInChildren<Tilemap>();
                 if (isSpawnMode)
                     SpawnPhoto(tilemap);
                 else
