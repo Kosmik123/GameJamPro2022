@@ -31,8 +31,6 @@ public class CopyCameraPhotosController : MonoBehaviour
     public UnityEvent OnPhotoMade = new UnityEvent();
     public UnityEvent OnPhotoSpawned = new UnityEvent();
 
-    private TileBase[] cachedTiles;
-
     private void RefreshVisuals()
     {
         copyCamera.PhotoModeGraphic.gameObject.SetActive(!isSpawnMode);
@@ -48,13 +46,15 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void Awake()
     {
+        if (copyCamera == null)
+            copyCamera = FindObjectOfType<CopyCamera>();
         currentlySavedPhoto = new Photo(copyCamera.Settings.ViewTileSize.x, copyCamera.Settings.ViewTileSize.y);
-        cachedTiles = new TileBase[copyCamera.Settings.ViewTileSize.x * copyCamera.Settings.ViewTileSize.y];
         Clear();
     }
 
     public void Clear()
     {
+        Debug.LogWarning("Clearing photo");
         currentlySavedPhoto.Clear();
         isPhotoTaken = false;
         IsSpawnMode = false;
@@ -107,6 +107,10 @@ public class CopyCameraPhotosController : MonoBehaviour
                 {
                     var tilemap = typeToLayerMapping.Value.Tilemap;
                     var pos = new Vector3Int(i + startVisiblePos.x, j + startVisiblePos.y, 0);
+                    if (tilemap == null)
+                    {
+                        Debug.LogError("Tilemapa jest null");
+                    }    
                     var tile = tilemap.GetTile(pos);
                     if (tile != null)
                     {
@@ -118,21 +122,45 @@ public class CopyCameraPhotosController : MonoBehaviour
             }
         }
 
+        Debug.LogWarning("Idzie ok bez nullów");
+
+
         var photoBounds = new BoundsInt(-size.x / 2, -size.y / 2, 0, size.x, size.y, 1);
         foreach (var typeToLayerMapping in tilemapLayers)
         {
+            Debug.LogWarning("Bierzemy kolejny layer");
             var type = typeToLayerMapping.Key;
+            Debug.LogWarning($"Typ layera to {type}");
             if (type != TilemapLayer.Type.NotCopiable)
             {
+                if (copyCamera == null)
+                    Debug.LogWarning($"Copy camera to null");
+                Debug.LogWarning("Copy camera jest");
+
+                if (copyCamera.tilemapLayers == null)
+                    Debug.LogWarning($"Layersy copy camery to null");
+                Debug.LogWarning("Słownik typów na wartwy tilemap jest");
+
                 if (copyCamera.tilemapLayers.TryGetValue(type, out var layer))
                 {
+                    if (layer == null)
+                        Debug.LogError($"Layer typu: {type} jest null!");
+                    Debug.LogWarning($"Warstwa dla typu {type} istnieje");
+
                     if (currentlySavedPhoto.tilesByType.TryGetValue(type, out var tiles))
+                    {
+                        Debug.LogWarning($"Tilemapa dla tej warstwy to: {layer.Tilemap}");
                         layer.Tilemap.SetTilesBlock(photoBounds, tiles);
-                } 
+                    }
+                }
                 else
                 {
                     Debug.Log(type + " jest zły");
                 }
+            }
+            else
+            {
+                Debug.LogWarning("Typ niekopiowalny");
             }
         }
 
@@ -145,6 +173,7 @@ public class CopyCameraPhotosController : MonoBehaviour
         //        MakePhoto(tilemap.Value, startVisiblePos, size);
         //}
         OnPhotoMade.Invoke();
+        Debug.LogWarning("Taking photo successful");
     }
 
     //private void MakePhoto(TilemapLayer tilemapLayer, Vector2Int startVisiblePos, Vector2Int size)
