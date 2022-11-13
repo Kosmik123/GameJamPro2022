@@ -19554,7 +19554,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1876767bf7cbf284394dc3817af9593c, type: 3}
   _maxTilt: 5
   _tiltSpeed: 30
-  _maxIdleSpeed: 2
+  _maxIdleSpeed: 2.56
   _maxParticleFallSpeed: -40
   stepSoundDelay: 0.12
 --- !u!82 &771776640
