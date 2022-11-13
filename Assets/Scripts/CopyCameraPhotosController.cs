@@ -206,16 +206,22 @@ public class CopyCameraPhotosController : MonoBehaviour
 
                 if (wasNotNull && typeOnPhoto != TilemapLayer.Type.NotCopiable)
                 {
-                    foreach (var layer in worldTilemapLayers)
-                    {
-                        var pos = new Vector3Int(i, j, 0) + targetBoundsPosition;
-                     
-                        
-                        if (layer.Key == typeOnPhoto)
-                            layer.Value.Tilemap.SetTile(pos, theTile);
-                        else
-                            layer.Value.Tilemap.SetTile(pos, null);
-                    } 
+                    var pos = new Vector3Int(i, j, 0) + targetBoundsPosition;
+                    if (worldTilemapLayers.TryGetValue(TilemapLayer.Type.NotSpawnable, out var layerInWorld)
+                        && layerInWorld.Tilemap.GetTile(pos) != null)
+                    { 
+
+                    }
+                    else
+                    { 
+                        foreach (var layer in worldTilemapLayers)
+                        {
+                            if (layer.Key == typeOnPhoto)
+                                layer.Value.Tilemap.SetTile(pos, theTile);
+                            else
+                                layer.Value.Tilemap.SetTile(pos, null);
+                        } 
+                    }
                 }
                 index++;
             }
