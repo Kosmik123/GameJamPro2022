@@ -4118,6 +4118,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4835004941236272089, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.68
+      objectReference: {fileID: 0}
     - target: {fileID: 5657835737331218933, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_Camera
       value: 
@@ -4212,7 +4216,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049003859167288257, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_text
-      value: I really hope the Devil isn't looking for me
+      value: 'The last
+
+        stretch...'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
