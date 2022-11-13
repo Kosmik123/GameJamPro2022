@@ -628,6 +628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LEVEL BASE
       objectReference: {fileID: 0}
+    - target: {fileID: 3850907797042885764, guid: b326ac35610a03e4098315eabd308f2b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f6c4aa3ac4911454f8a34793da881a9b, type: 3}
     - target: {fileID: 8374148166299784845, guid: b326ac35610a03e4098315eabd308f2b, type: 3}
       propertyPath: m_IsActive
       value: 1
