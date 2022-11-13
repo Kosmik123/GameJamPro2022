@@ -19,14 +19,20 @@ public class TilemapLayer : MonoBehaviour
     public Type type => _type;
 
     private Tilemap tilemap;
-    public Tilemap Tilemap => tilemap;
 
-    private TilemapRenderer tilemapRenderer;
+    public Tilemap Tilemap
+    {
+        get
+        {
+            if (tilemap == null)
+                tilemap = GetComponent<Tilemap>();
+            return tilemap;
+        }
+    }
 
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
-        tilemapRenderer = GetComponent<TilemapRenderer>();
     }
 
     private void Start()
