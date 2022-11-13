@@ -1897,7 +1897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049003859167288257, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
       propertyPath: m_text
-      value: I can move with A and S keys
+      value: I can move with A and D keys
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdacfadd8be8922458e02c2da12120d5, type: 3}
