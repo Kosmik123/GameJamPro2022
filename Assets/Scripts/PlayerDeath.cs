@@ -16,8 +16,6 @@ public class PlayerDeath : MonoBehaviour
     private GameObject visuals;
     [SerializeField]
     private float yDeath;
-    [SerializeField]
-    private TrailRenderer trailRenderer;
 
     private Vector3 startingPosition;
     private bool isDead;
@@ -33,7 +31,6 @@ public class PlayerDeath : MonoBehaviour
         if (isDead == false && playerTransform.position.y < yDeath)
         {
             isDead = true;
-            trailRenderer.time = 0;
             OnDied?.Invoke();
         }
     }
@@ -44,14 +41,5 @@ public class PlayerDeath : MonoBehaviour
         playerController.Velocity = Vector3.zero;
 
         isDead = false;
-        StartCoroutine(EnableTrailCo());
     }
-
-    private IEnumerator EnableTrailCo()
-    {
-        yield return null;
-        trailRenderer.time = 1;
-        trailRenderer.Clear();
-    }
-
 }
