@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 using System;
-
+using UnityEngine.Events;
 
 public class CopyCameraPhotosController : MonoBehaviour
 {
@@ -27,6 +27,9 @@ public class CopyCameraPhotosController : MonoBehaviour
             RefreshVisuals();
         }
     }
+
+    public UnityEvent OnPhotoMade = new UnityEvent();
+    public UnityEvent OnPhotoSpawned = new UnityEvent();
 
     private TileBase[] cachedTiles;
 
@@ -141,6 +144,7 @@ public class CopyCameraPhotosController : MonoBehaviour
         //    if (tilemap.Key != TilemapLayer.Type.NotCopiable)
         //        MakePhoto(tilemap.Value, startVisiblePos, size);
         //}
+        OnPhotoMade.Invoke();
     }
 
     //private void MakePhoto(TilemapLayer tilemapLayer, Vector2Int startVisiblePos, Vector2Int size)
@@ -229,10 +233,12 @@ public class CopyCameraPhotosController : MonoBehaviour
 
 
         //foreach (var tilesArray in currentlySavedPhoto.tilesByType)
-       // {
-       //     var type = tilesArray.Key;
-       //     SpawnPhoto(tilesArray.Value, worldTilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
-       // }
+        // {
+        //     var type = tilesArray.Key;
+        //     SpawnPhoto(tilesArray.Value, worldTilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
+        // }
+
+        OnPhotoSpawned.Invoke();
     }
 
     private void SpawnPhoto(TileBase[] tiles, Tilemap targetTilemap, Vector3Int boundsPosition, Vector3Int photoBoundsSize, Vector3Int targetBoundsPosition, BoundsInt photoTargetBounds)
