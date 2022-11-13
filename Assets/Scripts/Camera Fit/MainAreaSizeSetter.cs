@@ -18,9 +18,10 @@ public class MainAreaSizeSetter : MonoBehaviour
     private void RefreshEditor()
     {
         Refresh();
+#if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+#endif
     }
-
 
     private void Refresh()
     {
