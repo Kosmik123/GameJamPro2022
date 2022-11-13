@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,7 @@ namespace TarodevController {
         [SerializeField] private float _tiltSpeed = 1;
         [SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
         [SerializeField] private float _maxParticleFallSpeed = -40;
+        [SerializeField] private float stepSoundDelay;
 
         private IPlayerController _player;
         private bool _playerGrounded;
@@ -25,6 +27,13 @@ namespace TarodevController {
         private Vector2 _movement;
 
         void Awake() => _player = GetComponentInParent<IPlayerController>();
+
+        private bool canPlayStepSound;
+
+        private void Start()
+        {
+            canPlayStepSound = true;
+        }
 
         void Update() {
             if (_player == null) return;
@@ -37,7 +46,15 @@ namespace TarodevController {
             _anim.transform.rotation = Quaternion.RotateTowards(_anim.transform.rotation, Quaternion.Euler(targetRotVector), _tiltSpeed * Time.deltaTime);
 
             // Speed up idle while running
-            _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, Mathf.Abs(_player.Input.X)));
+            float speed = Mathf.Lerp(1, _maxIdleSpeed, Mathf.Abs(_player.Input.X));
+            _anim.SetFloat(IdleSpeedKey, speed);
+            if (canPlayStepSound && speed > _maxIdleSpeed / 1.5f)
+            {
+                _source.PlayOneShot(_footsteps[Random.Range(0, _footsteps.Length)]);
+                canPlayStepSound = false;
+                StopAllCoroutines();
+                StartCoroutine(EnableStepSoundsCo());
+            }
 
             // Splat
             if (_player.LandingThisFrame) {
@@ -79,6 +96,15 @@ namespace TarodevController {
             }
 
             _movement = _player.RawMovement; // Previous frame movement is more valuable
+        }
+
+        private IEnumerator EnableStepSoundsCo()
+        {
+            float unlockTime = Time.time + stepSoundDelay;
+            while (Time.time < unlockTime)
+                yield return null;
+
+            canPlayStepSound = true;
         }
 
         private void OnDisable() {
