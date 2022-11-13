@@ -11,9 +11,29 @@ public class Finish : MonoBehaviour
     {
         if (collision.collider.CompareTag(playerTag))
         {
-            var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            if (activeSceneIndex < SceneManager.sceneCountInBuildSettings)
-                SceneManager.LoadSceneAsync(activeSceneIndex + 1);
+            FinishLevel();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    { 
+        if (collision.CompareTag(playerTag))
+        {
+            FinishLevel();
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+            FinishLevel();
+    }
+
+    private static void FinishLevel()
+    {
+        var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (activeSceneIndex < SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadSceneAsync(activeSceneIndex + 1);
+    }
+
 }
