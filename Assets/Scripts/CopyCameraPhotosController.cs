@@ -52,6 +52,7 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     public void Clear()
     {
+        currentlySavedPhoto.Clear();
         isPhotoTaken = false;
         IsSpawnMode = false;
     }
@@ -88,6 +89,7 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void MakePhoto()
     {
+        Clear();
         var tilemapLayers = tilemapsManager.TilemapLayers;
         Vector2Int size = copyCamera.Settings.ViewTileSize;
         Vector2Int startVisiblePos = copyCamera.intPosition - copyCamera.Settings.ViewTileSize / 2;
@@ -118,7 +120,17 @@ public class CopyCameraPhotosController : MonoBehaviour
         {
             var type = typeToLayerMapping.Key;
             if (type != TilemapLayer.Type.NotCopiable)
-                copyCamera.tilemapLayers[type].Tilemap.SetTilesBlock(photoBounds, currentlySavedPhoto.tilesByType[type]);
+            {
+                if (copyCamera.tilemapLayers.TryGetValue(type, out var layer))
+                {
+                    if (currentlySavedPhoto.tilesByType.TryGetValue(type, out var tiles))
+                        layer.Tilemap.SetTilesBlock(photoBounds, tiles);
+                } 
+                else
+                {
+                    Debug.Log(type + " jest zły");
+                }
+            }
         }
 
         isPhotoTaken = true;
@@ -156,6 +168,8 @@ public class CopyCameraPhotosController : MonoBehaviour
 
     private void SpawnPhoto()
     {
+        var worldTilemapLayers = tilemapsManager.TilemapLayers;
+
         var boundsPosition = new Vector3Int(
            -copyCamera.Settings.ViewTileSize.x / 2,
            -copyCamera.Settings.ViewTileSize.y / 2,
@@ -168,11 +182,51 @@ public class CopyCameraPhotosController : MonoBehaviour
                1);
 
         var photoTargetBounds = new BoundsInt(targetBoundsPosition, photoBoundsSize);
-        foreach (var tilesArray in currentlySavedPhoto.tilesByType)
+
+        int index = 0;
+        for (int j = 0; j < photoBoundsSize.y; j++)
         {
-            var type = tilesArray.Key;
-            SpawnPhoto(tilesArray.Value, tilemapsManager.TilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
+            for (int i = 0; i < photoBoundsSize.x; i++)
+            {
+                bool wasNotNull = false;
+                TileBase theTile = null;
+                TilemapLayer.Type typeOnPhoto = TilemapLayer.Type.None;          
+                foreach (var typeToArrayMapping in currentlySavedPhoto.tilesByType)
+                {
+                    var type = typeToArrayMapping.Key;
+                    var tile = typeToArrayMapping.Value[index];
+                    if (tile != null)
+                    {
+                        wasNotNull = true;
+                        theTile = tile;
+                        typeOnPhoto = type;
+                        break;
+                    }
+                }
+
+                if (wasNotNull && typeOnPhoto != TilemapLayer.Type.NotCopiable)
+                {
+                    foreach (var layer in worldTilemapLayers)
+                    {
+                        var pos = new Vector3Int(i, j, 0) + targetBoundsPosition;
+                     
+                        
+                        if (layer.Key == typeOnPhoto)
+                            layer.Value.Tilemap.SetTile(pos, theTile);
+                        else
+                            layer.Value.Tilemap.SetTile(pos, null);
+                    } 
+                }
+                index++;
+            }
         }
+
+
+        //foreach (var tilesArray in currentlySavedPhoto.tilesByType)
+       // {
+       //     var type = tilesArray.Key;
+       //     SpawnPhoto(tilesArray.Value, worldTilemapLayers[type].Tilemap, boundsPosition, photoBoundsSize, targetBoundsPosition, photoTargetBounds);
+       // }
     }
 
     private void SpawnPhoto(TileBase[] tiles, Tilemap targetTilemap, Vector3Int boundsPosition, Vector3Int photoBoundsSize, Vector3Int targetBoundsPosition, BoundsInt photoTargetBounds)

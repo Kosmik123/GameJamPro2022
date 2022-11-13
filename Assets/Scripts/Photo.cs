@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using System;
 
 [SerializeField]
 public class Photo
@@ -37,4 +38,14 @@ public class Photo
         tilesByType[type][position.y * width + position.x] = tile;
     }
 
+    internal void Clear()
+    {
+        foreach (var mapping in tilesByType)
+        {
+            for (int i = 0; i < mapping.Value.Length; i++)
+            {
+                mapping.Value[i] = null;
+            }
+        }
+    }
 }

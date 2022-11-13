@@ -6,6 +6,7 @@ public class TilemapLayer : MonoBehaviour
 {
     public enum Type
     {
+        None = 0,
         Ground = 1, 
         Hole = 2,
         NotCopiable = 3,
